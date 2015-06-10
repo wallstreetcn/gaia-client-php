@@ -1,0 +1,17 @@
+{
+  "name": "wallstreetcn/gaia-client",
+  "description": "A PHP client for gaia SSO.",
+  "require": {
+    "guzzlehttp/guzzle": "^6.0",
+    "phpunit/phpunit": "^4.6"
+  },
+  "require-dev": {
+    "mockery/mockery": "^0.9.4",
+    "satooshi/php-coveralls": "^0.6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wscn\\Gaia\\Client\\": "src/Wscn/Gaia/Client/"
+    }
+  }
+}
