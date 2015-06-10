@@ -1,5 +1,5 @@
 {
-  "name": "wallstreetcn/gaia-client",
+  "name": "wallstreetcn/gaia-client-php",
   "description": "A PHP client for gaia SSO.",
   "require": {
     "guzzlehttp/guzzle": "^6.0",

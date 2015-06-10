@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Wscn\Gaia\Client\DAO;
 
+use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Wscn\Gaia\Client\Config;
 use Wscn\Gaia\Client\Contracts\UserDAOInterface;
@@ -30,10 +31,10 @@ class UserHttpDAO implements UserDAOInterface
      * @param Config $config 配置参数
      * @param ClientInterface $client http 客户端
      */
-    public function __construct(Config $config, ClientInterface $client)
+    public function __construct(Config $config = null, ClientInterface $client = null)
     {
-        $this->httpClient = $client;
-        $this->config = $config;
+        $this->httpClient = empty($client) ? new Client() : $client;
+        $this->config = empty($config) ? new Config() : $config;
     }
 
     protected function passportUrl($endpoint)

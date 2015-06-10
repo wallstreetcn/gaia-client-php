@@ -40,14 +40,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @param $next
      * @param $except
      */
-    public function testGetLoginRedirectUrl($next, $except)
+    public function testGetLoginUrl($next, $except)
     {
         $config = new Config();
         $httpClient = new Client();
         $session = $this->getMockSession();
         $session->shouldReceive('exists')->andReturnNull();
         $userService = new User($session, new Cookie(), new UserHttpDAO($config, $httpClient), $config);
-        $this->assertEquals($except, $userService->getLoginRedirectUrl($next));
+        $this->assertEquals($except, $userService->getLoginUrl($next));
     }
 
     public function testLogin()

@@ -14,7 +14,10 @@ use Wscn\Gaia\Client\Config;
 use Wscn\Gaia\Client\Contracts\CookieInterface;
 use Wscn\Gaia\Client\Contracts\SessionInterface;
 use Wscn\Gaia\Client\Contracts\UserDAOInterface;
+use Wscn\Gaia\Client\DAO\UserHttpDAO;
 use Wscn\Gaia\Client\Entities\LoggedInUser;
+use Wscn\Gaia\Client\Http\Cookie;
+use Wscn\Gaia\Client\Http\Session;
 
 class User
 {
@@ -47,15 +50,15 @@ class User
      * @param Config $config
      */
     public function __construct(
-        SessionInterface $session,
-        CookieInterface $cookie,
-        UserDAOInterface $userDAO,
-        Config $config
+        SessionInterface $session = null,
+        CookieInterface $cookie = null,
+        UserDAOInterface $userDAO = null,
+        Config $config = null
     ) {
-        $this->session = $session;
-        $this->cookie = $cookie;
-        $this->userDAO = $userDAO;
-        $this->config = $config;
+        $this->session = empty($session) ? new Session() : $session;
+        $this->cookie = empty($cookie) ? new Cookie() : $session;
+        $this->config = empty($config) ? new Config() : $config;
+        $this->userDAO = empty($userDAO) ? new UserHttpDAO($this->config) : $userDAO;
 
         $this->initialize();
     }
@@ -158,10 +161,25 @@ class User
      * @param string $next
      * @return string
      */
-    public function getLoginRedirectUrl($next = '')
+    public function getLoginUrl($next = '')
     {
         $passportBase = $this->config->getPassportBase();
         $url = rtrim($passportBase, '/') . '/login';
+        if ($next) {
+            return $url . '?next=' . urlencode($next);
+        }
+    }
+
+    /**
+     * 获取退出链接
+     *
+     * @param string $next
+     * @return string
+     */
+    public function getLogoutUrl($next = '')
+    {
+        $passportBase = $this->config->getPassportBase();
+        $url = rtrim($passportBase, '/') . '/logout';
         if ($next) {
             return $url . '?next=' . urlencode($next);
         }
