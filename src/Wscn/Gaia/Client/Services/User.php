@@ -56,7 +56,7 @@ class User
         Config $config = null
     ) {
         $this->session = empty($session) ? new Session() : $session;
-        $this->cookie = empty($cookie) ? new Cookie() : $session;
+        $this->cookie = empty($cookie) ? new Cookie() : $cookie;
         $this->config = empty($config) ? new Config() : $config;
         $this->userDAO = empty($userDAO) ? new UserHttpDAO($this->config) : $userDAO;
 
