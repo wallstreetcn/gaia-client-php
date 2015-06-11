@@ -80,7 +80,6 @@ class User
 
         // 从 session 中获取登录用户
         $this->currentUser = unserialize($this->session->get($this->config->getSessionKey()));
-
         // 没有登录本地系统
         if (!$this->currentUser instanceof LoggedInUser || !$this->isLoggedIn()) {
             $this->loginByTicket($ticket);
@@ -166,8 +165,10 @@ class User
         $passportBase = $this->config->getPassportBase();
         $url = rtrim($passportBase, '/') . '/login';
         if ($next) {
-            return $url . '?next=' . urlencode($next);
+            $url .= '?next=' . urlencode($next);
         }
+
+        return $url;
     }
 
     /**
@@ -181,7 +182,10 @@ class User
         $passportBase = $this->config->getPassportBase();
         $url = rtrim($passportBase, '/') . '/logout';
         if ($next) {
-            return $url . '?next=' . urlencode($next);
+            $url .= '?next=' . urlencode($next);
         }
+
+        return $url;
+
     }
 }

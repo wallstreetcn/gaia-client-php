@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>gaia-client-php demo</title>
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+<div>
+    <img style="border-radius: 8px; height: 60px; width: 60px;"
+         src="<?php echo $user->getAvatar() . '!wscn.avatar.m'; ?>">
+
+    <p>你好：<span style="font-weight: bold; color: darkred;"><?php echo $user->getScreenName() ?></span></p>
+
+    <p><a href="<?= $userService->getLogoutUrl() ?>">退出</a></p>
+</div>
+
+</body>
+</html>

@@ -49,15 +49,10 @@ class UserHttpDAO implements UserDAOInterface
     public function getSSOUser($ticket)
     {
         $url = $this->passportUrl('/me');
-        $resp = $this->httpClient->get($url, [
-            'cookies' => array(
-                $this->config->getSsoTicketName() => $ticket
-            )
-        ])->send(null);
-
+        $resp = $this->httpClient->get($url)->addCookie($this->config->getSsoTicketName(), $ticket)->send();
 
         if ($resp->getStatusCode() == 200) {
-            $userArr = json_decode($resp->getBody(), true);
+            $userArr = json_decode($resp->getBody(true), true);
             $user = null;
             if ($userArr) {
                 $user = new LoggedInUser($userArr);
